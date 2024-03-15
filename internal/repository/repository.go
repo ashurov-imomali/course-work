@@ -6,6 +6,6 @@ type Repository struct {
 	Db *gorm.DB
 }
 
-func GetRepository(db *gorm.DB) *Repository {
-	return &Repository{Db: db}
+func GetRepository() *Repository {
+	return &Repository{}
 }

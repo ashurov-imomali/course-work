@@ -1,7 +1,8 @@
 package server
 
 import (
-	"back-end/internal/handler"
+	"fmt"
+	"net/http"
 )
 
 type Server struct {
@@ -9,6 +10,7 @@ type Server struct {
 	Port int    `json:"port"`
 }
 
-func StartListen(handler handler.Handler, server *Server) {
-	srv.ListenAndServe()
+func StartListen(handler http.Handler, srv *Server) error {
+	err := http.ListenAndServe(fmt.Sprintf("%s:%d", srv.Host, srv.Port), handler)
+	return err
 }
