@@ -35,6 +35,5 @@ func GetLogger() (*zap.Logger, error) {
 	logCore := zapcore.NewCore(logEncoder, logSync, zap.InfoLevel)
 	tee := zapcore.NewTee(errCore, logCore)
 	logger := zap.New(tee, zap.AddCaller())
-
 	return logger, nil
 }

@@ -18,6 +18,7 @@ func main() {
 		log.Println(err)
 		return
 	}
+	defer zLogger.Sync()
 	conf, err := config.GetConfigs()
 	if err != nil {
 		zLogger.Error("Can't get configs.", zap.Error(err))
