@@ -2,6 +2,7 @@ package main
 
 import (
 	"back-end/internal/config"
+	"back-end/internal/db"
 	"back-end/internal/handler"
 	"back-end/internal/repository"
 	"back-end/internal/route"
@@ -24,14 +25,14 @@ func main() {
 		zLogger.Error("Can't get configs.", zap.Error(err))
 		return
 	}
-	//db, err := db.GetConnection(&conf.Db)
-	//if err != nil {
-	//	zLogger.Error("Can't get connection.", zap.Error(err))
-	//	return
-	//}
-	repos := repository.GetRepository()
+	connection, err := db.GetConnection(&conf.Db)
+	if err != nil {
+		zLogger.Error("Can't get connection.", zap.Error(err))
+		return
+	}
+	repos := repository.GetRepository(connection)
 	srv := service.GetService(repos)
-	handlers := handler.GetHandler(srv)
+	handlers := handler.GetHandler(srv, zLogger)
 	routes := route.GetRoute(handlers)
 	err = server.StartListen(routes, &conf.Srv)
 	if err != nil {

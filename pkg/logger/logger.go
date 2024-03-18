@@ -3,6 +3,7 @@ package logger
 import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"log"
 	"os"
 	"time"
 )
@@ -35,5 +36,6 @@ func GetLogger() (*zap.Logger, error) {
 	logCore := zapcore.NewCore(logEncoder, logSync, zap.InfoLevel)
 	tee := zapcore.NewTee(errCore, logCore)
 	logger := zap.New(tee, zap.AddCaller())
+	log.Println("oook")
 	return logger, nil
 }

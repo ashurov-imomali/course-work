@@ -3,30 +3,21 @@ package handler
 import (
 	"back-end/internal/service"
 	"github.com/gin-gonic/gin"
-	"log"
-	"os"
-	"time"
+	"go.uber.org/zap"
+	"net/http"
 )
 
 type Handler struct {
 	Srv service.SrvMeths
+	Log *zap.Logger
 }
 
-func GetHandler(srv service.SrvMeths) *Handler {
-	return &Handler{Srv: srv}
+func GetHandler(srv service.SrvMeths, zLog *zap.Logger) *Handler {
+	return &Handler{Srv: srv, Log: zLog}
 }
 
 func (h *Handler) Ping(c *gin.Context) {
-	defer func() {
-		go func() {
-			time.Sleep(2 * time.Second)
-			err := os.RemoveAll("app-log.log")
-			if err != nil {
-				log.Println(err)
-				return
-			}
-		}()
-	}()
-	c.JSON(200, gin.H{"message": "pong"})
-
+	h.Log.Error("some")
+	h.Log.Info("start ping ...")
+	c.JSON(http.StatusOK, gin.H{"message": "pong"})
 }

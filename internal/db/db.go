@@ -15,7 +15,8 @@ type Database struct {
 }
 
 func GetConnection(dbStruct *Database) (*gorm.DB, error) {
-	dbSettings := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s")
+	dbSettings := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		dbStruct.Host, dbStruct.Port, dbStruct.Username, dbStruct.Password, dbStruct.DatabaseName)
 	db, err := gorm.Open(postgres.Open(dbSettings), &gorm.Config{})
 	if err != nil {
 		return nil, err
