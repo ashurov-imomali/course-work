@@ -17,7 +17,5 @@ func GetHandler(srv service.SrvMeths, zLog *zap.Logger) *Handler {
 }
 
 func (h *Handler) Ping(c *gin.Context) {
-	h.Log.Error("some")
-	h.Log.Info("start ping ...")
 	c.JSON(http.StatusOK, gin.H{"message": "pong"})
 }
