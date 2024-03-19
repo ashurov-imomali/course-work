@@ -27,7 +27,7 @@ CREATE TABLE "permissions2role" (
 "role_id" BIGINT references roles
 );
 
-CREATE TABLE "employeers" (
+CREATE TABLE "employees" (
 "id" BIGSERIAL PRIMARY KEY,
 "first_name" TEXT NOT NULL,
 "surname" TEXT NOT NULL,
@@ -79,6 +79,7 @@ CREATE TABLE "services" (
 "description" TEXT NULL,
 "type_id" BIGINT references types,
 "rule_id" BIGINT references rules,
+"active" boolean not null default true,
 "created_at" TIMESTAMP default current_timestamp,
 "created_by" bigint references employeers,
 "updated_at" TIMESTAMP DEFAULT CURRENT_TIME,
