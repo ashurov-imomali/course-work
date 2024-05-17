@@ -83,7 +83,7 @@ func (Type) TableName() string {
 	return "types"
 }
 
-type Services struct {
+type Service struct {
 	Id          int64      `json:"id" gorm:"id"`
 	Name        string     `json:"name" gorm:"name"`
 	Description string     `json:"description" gorm:"description"`
@@ -96,4 +96,8 @@ type Services struct {
 	UpdatedBy   int64      `json:"updated_by" gorm:"updated_by"`
 	DeletedAt   *time.Time `json:"deleted_at" gorm:"deleted_at"`
 	DeletedBy   int64      `json:"deleted_by" gorm:"deleted_by"`
+}
+
+func (Service) TableName() string {
+	return "services"
 }
