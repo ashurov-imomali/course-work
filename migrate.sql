@@ -76,7 +76,7 @@ last_payment_id bigint
 create table rules (
 id bigserial primary key,
 commission float not null,
-term int not null,
+term integer not null,
 active boolean not null default true,
 min numeric not null default 0 check ( min >= 0 ),
 max numeric not null default 1000000000 check ( max > 0 )
@@ -104,10 +104,6 @@ deleted_at bigint,
 deleted_by bigint references employees
 );
 
-create table clients2services (
-client_id bigint references clients,
-service_id bigint references services
-);
 
 
 CREATE TABLE account_types(

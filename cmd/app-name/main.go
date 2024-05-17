@@ -37,5 +37,6 @@ func main() {
 	err = server.StartListen(routes, &conf.Srv)
 	if err != nil {
 		zLogger.Error("Can't start listen and serve", zap.Error(err))
+		return
 	}
 }

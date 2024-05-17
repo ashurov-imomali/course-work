@@ -11,5 +11,9 @@ type Server struct {
 }
 
 func StartListen(handler http.Handler, srv *Server) error {
-	return http.ListenAndServe(fmt.Sprintf("%s:%d", srv.Host, srv.Port), handler)
+	var err error
+	go func(err *error) {
+		*err = http.ListenAndServe(fmt.Sprintf("%s:%d", srv.Host, srv.Port), handler)
+	}(&err)
+	return err
 }
