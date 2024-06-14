@@ -72,7 +72,7 @@ type Client struct {
 	Gender             bool       `json:"gender" gorm:"gender"`
 	Citizenship        string     `json:"citizenship" gorm:"citizenship"`
 	PassportSeries     string     `json:"passport_series" gorm:"passport_series"`
-	PasswordNumber     int64      `json:"password_number" gorm:"password_number"`
+	PassportNumber     int64      `json:"password_number" gorm:"password_number"`
 	DateOfIssue        *time.Time `json:"date_of_issue" gorm:"date_of_issue"`
 	PlaceOfIssue       string     `json:"place_of_issue" gorm:"place_of_issue"`
 	ResidentialAddress string     `json:"residential_address" gorm:"residential_address"`
@@ -80,6 +80,10 @@ type Client struct {
 	Phone              string     `json:"phone" gorm:"column:phone"`
 	Email              string     `json:"email" gorm:"column:email"`
 	LastPaymentId      int64      `json:"last_payment_id" gorm:"column:last_payment_id"`
+	Login              string     `json:"login" gorm:"column:login"`
+	Password           string     `json:"password" gorm:"column:password"`
+	Salt               string     `json:"salt" gorm:"column:salt"`
+	Verify             bool       `json:"verify" gorm:"column:verify"`
 }
 
 func (Client) TableName() string {
@@ -117,6 +121,7 @@ type Service struct {
 	Active      bool       `json:"active" gorm:"active"`
 	TypeId      int64      `json:"type_id" gorm:"type_id"`
 	RuleId      int64      `json:"rule_id" gorm:"rule_id"`
+	ImageSource string     `json:"image_source" gorm:"column:image"`
 	CreatedAt   *time.Time `json:"created_at" gorm:"created_at"`
 	CreatedBy   int64      `json:"created_by" gorm:"created_by"`
 	UpdatedAt   *time.Time `json:"updated_at" gorm:"updated_at"`
@@ -167,4 +172,14 @@ type Payment struct {
 
 func (Payment) TableName() string {
 	return "payments"
+}
+
+type Login struct {
+	Login    string `json:"login"`
+	Password string `json:"password"`
+}
+
+type VerifyLogin struct {
+	Login string `json:"email"`
+	Otp   string `json:"otp"`
 }

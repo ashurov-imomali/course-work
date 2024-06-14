@@ -70,7 +70,9 @@ place_of_issue text not null,
 residential_address text not null,
 phone text not null,
 email text not null,
-last_payment_id bigint
+last_payment_id bigint,
+login text not null,
+password text not null
 );
 
 create table rules (
