@@ -13,7 +13,7 @@ func GetRoute(h *handler.Handler) *gin.Engine {
 	{
 		services.GET("/:typeId", h.GetServices)
 		services.GET("/by-id/:srvId", h.GetServiceById)
-		services.POST("/")
+		services.POST("/", h.NewServicesForClient)
 	}
 	account := r.Group("/account")
 	{

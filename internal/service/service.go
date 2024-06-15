@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/smtp"
 	"regexp"
+	"strconv"
 	"time"
 )
 
@@ -56,11 +57,11 @@ func (s *Service) Login(login *models.Login) (string, *Error) {
 	jwtClaims["id"] = client.Id
 	jwtClaims["priority_id"] = client.PriorityId
 	jwtClaims["expiration_time"] = time.Now().Add(time.Hour).Unix()
-	token, err := s.generateJWT(jwtClaims, client.Salt)
+	_, err = s.generateJWT(jwtClaims, client.Salt)
 	if err != nil {
 		return "", s.internalError(err, "can't generate jwt token")
 	}
-	return token, s.Ok()
+	return strconv.FormatInt(client.Id, 10), s.Ok()
 
 }
 
@@ -225,4 +226,16 @@ func (s *Service) VerifyLogin(otp *models.VerifyLogin) *Error {
 		return s.otherError(s.Repo.CreateClient(user), "", 500)
 	}
 	return s.badRequest(errors.New("invalid otp"), "invalid otp")
+}
+
+func (s *Service) CreateSrvForClient(srv *models.SrvReq) *Error {
+	service, err := s.Repo.GetServiceById(srv.ServiceId)
+	if err != nil {
+		return s.internalError(err, "Database ERROR")
+	}
+	otp, err := generateNumericOTP(12)
+	if err != nil {
+		return s.internalError(err, "couldn't generate otp")
+	}
+	return s.otherError(s.Repo.CreateCreditSrv(srv, service.TypeId, otp), "database error", 500)
 }

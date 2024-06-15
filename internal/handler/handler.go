@@ -70,7 +70,7 @@ func (h *Handler) Login(c *gin.Context) {
 		c.JSON(sErr.Status, gin.H{"message": sErr.Message})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	c.JSON(http.StatusOK, gin.H{"id": token})
 }
 
 func (h *Handler) Registration(c *gin.Context) {
@@ -130,6 +130,20 @@ func (h *Handler) Verify(c *gin.Context) {
 	}
 	if hErr := h.Srv.VerifyLogin(&confirm); hErr.Err != nil {
 		h.Log.Error("[VERIFY]", zap.Error(hErr.Err))
+		c.JSON(hErr.Status, gin.H{"message": hErr.Message})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
+}
+
+func (h *Handler) NewServicesForClient(c *gin.Context) {
+	var newSrv models.SrvReq
+	if err := c.ShouldBindJSON(&newSrv); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"message": "couldn't parse 2 struct"})
+		return
+	}
+	if hErr := h.Srv.CreateSrvForClient(&newSrv); hErr.Err != nil {
+		h.Log.Error(hErr.Message, zap.Error(hErr.Err))
 		c.JSON(hErr.Status, gin.H{"message": hErr.Message})
 		return
 	}

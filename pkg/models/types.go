@@ -16,3 +16,10 @@ type AccountCreateReq struct {
 	ServiceId int64
 	Client    *Client
 }
+
+type SrvReq struct {
+	ClientId  int64   `json:"client_id" gorm:"client_id"`
+	ServiceId int64   `json:"service_id" gorm:"column:service_id"`
+	Amount    float64 `json:"amount" gorm:"column:amount"`
+	Term      int     `json:"term"`
+}

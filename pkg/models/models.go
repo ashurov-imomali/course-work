@@ -146,7 +146,7 @@ func (AccountType) TableName() string {
 
 type Account struct {
 	Id        int64      `json:"id" gorm:"column:id"`
-	Number    int64      `json:"number" gorm:"column:number"`
+	Number    string     `json:"number" gorm:"column:number"`
 	TypeId    int64      `json:"type_id" gorm:"column:type_id"`
 	ClientId  int64      `json:"client_id" gorm:"column:client_id"`
 	ServiceId int64      `json:"service_id" gorm:"column:service_id"`
@@ -154,7 +154,6 @@ type Account struct {
 	Active    bool       `json:"active" gorm:"column:active"`
 	CreatedAt time.Time  `json:"created_at" gorm:"column:created_at"`
 	UpdatedAt *time.Time `json:"updated_at" gorm:"updated_at"`
-	DeletedAt *time.Time `json:"deleted_at" gorm:"deleted_at"`
 	ClosedAt  *time.Time `json:"closed_at" gorm:"column:closed_at"`
 }
 
